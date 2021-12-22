@@ -26,6 +26,7 @@ router.post("/user/signup", async (req, res) => {
             apiEmail: req.fields.apiAccount.apiEmail,
             apiEncryptPassword: req.fields.apiAccount.apiEncryptPassword,
           },
+          apiHeader: req.fields.apiHeader,
           token: token,
           hash: hash,
           salt: salt,
@@ -33,6 +34,7 @@ router.post("/user/signup", async (req, res) => {
 
         await newUser.save();
         res.json({
+          apiKey: newUser.apiHeader,
           _id: newUser._id,
           token: token,
           account: {
@@ -69,6 +71,7 @@ router.post("/user/login", async (req, res) => {
           message: "Success",
           _id: user.id,
           token: user.token,
+          apiKey: user.apiHeader,
         });
       } else {
         res.json({ message: "wrong password" });
@@ -78,6 +81,21 @@ router.post("/user/login", async (req, res) => {
     }
   } else {
     res.json({ message: "user does not exists" });
+  }
+});
+
+//Route Search API key
+
+router.get("/apikey", async (req, res) => {
+  console.log("route : /");
+  try {
+    // On recherche, grâce à la fonction find(), tous les documents de la collection "students" :
+    const userExists = await User.findOne({ email: req.fields.email });
+
+    // On retourne ensuite les documents trouvés :
+    res.json(userExists);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
   }
 });
 

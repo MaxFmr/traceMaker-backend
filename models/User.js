@@ -12,6 +12,7 @@ const User = mongoose.model("User", {
     apiEmail: { required: true, type: String },
     apiEncryptPassword: { required: true, type: String },
   },
+  apiHeader: { required: true, type: String },
   token: String,
   hash: String,
   salt: String,
