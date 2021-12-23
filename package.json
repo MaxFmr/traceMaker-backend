@@ -9,5 +9,8 @@
     "express-formidable": "^1.2.0",
     "mongoose": "^6.1.2",
     "uid2": "^1.0.0"
+  },
+  "scripts": {
+    "start": "node index.js"
   }
 }
