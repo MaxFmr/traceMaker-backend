@@ -7,7 +7,7 @@ const User = require("../models/User");
 const Data = require("../models/Data");
 
 // **Create**
-router.post("/admin/consult/:_id", async (req, res) => {
+router.get("/admin/consult/:_id", async (req, res) => {
   console.log("route : /create");
 
   const user = await User.findById(req.params._id);
