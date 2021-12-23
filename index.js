@@ -2,16 +2,16 @@ const express = require("express");
 const formidableMiddleware = require("express-formidable");
 const mongoose = require("mongoose");
 const cors = require("cors");
-
 const app = express();
 app.use(formidableMiddleware());
-app.use(cors());
 require("dotenv").config(); // Permet d'activer les variables d'environnement qui se trouvent dans le fichier `.env`
 
 // Connexion à la BDD nommée "students-app" :
 mongoose.connect(process.env.MONGODB_URI);
 
 // Import des routes
+
+app.use(cors());
 
 const usersRoutes = require("./routes/users");
 app.use(usersRoutes);
