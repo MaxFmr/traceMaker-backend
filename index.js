@@ -9,7 +9,9 @@ app.use(cors());
 require("dotenv").config(); // Permet d'activer les variables d'environnement qui se trouvent dans le fichier `.env`
 
 // Connexion à la BDD nommée "students-app" :
-mongoose.connect(process.env.MONGODB_URI);
+mongoose.connect(
+  "mongodb+srv://jpkerlidou:Vinci1966@cluster0.kwpeh.mongodb.net/traceMaker?retryWrites=true&w=majority"
+);
 
 // Import des routes
 
