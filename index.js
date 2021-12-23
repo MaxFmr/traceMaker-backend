@@ -15,8 +15,8 @@ mongoose.connect(process.env.MONGODB_URI);
 const usersRoutes = require("./routes/users");
 app.use(usersRoutes);
 
-const dataRoutes = require("./routes/data");
-app.use(dataRoutes);
+const adminRoutes = require("./routes/admin");
+app.use(adminRoutes);
 
 app.get("/", (req, res) => {
   res.json("WELCOME to JPK-MK API ! 😎");
