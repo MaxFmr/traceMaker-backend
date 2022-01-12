@@ -91,7 +91,6 @@ router.post("/user/login", async (req, res) => {
 router.get("/apikey", async (req, res) => {
   console.log("route : /");
   try {
-    // On recherche, grâce à la fonction find(), tous les documents de la collection "students" :
     const userExists = await User.findOne({ email: req.fields.email });
 
     // On retourne ensuite les documents trouvés :
