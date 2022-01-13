@@ -74,7 +74,7 @@ router.get("/admin/consult/csv/:_id", async (req, res) => {
 
   try {
     const response = await axios.get(
-      `https://www.tracabapp.com/api/jsonws/abapp.ligneachat/get-lignes-achat/code-criee/-1/date-start/${yesterdayDate}/date-stop/${nowDate}/code-espece-fao/-1/code-calibre/-1/zdp/-1/code-engin-c/-1/p-francais/false`,
+      `https://www.tracabapp.com/group/espace-acheteurs/mes_achats?p_p_id=portlet_abapp_reporting_PortletAbappReportingPortlet_INSTANCE_gOeclmmi98B4&p_p_lifecycle=2&p_p_state=normal&p_p_mode=view&p_p_resource_id=ligneAchat&p_p_cacheability=cacheLevelPage&dateStart=${yesterdayDate}&dateStop=${nowDate}&446025806`,
 
       {
         headers: {
@@ -84,16 +84,8 @@ router.get("/admin/consult/csv/:_id", async (req, res) => {
     );
     console.log(response.data);
 
-    const newData = new Data({
-      batch: response.data,
-    });
-
-    await newData.save();
-    const parser = new Parser(newData);
-    const csv = parser.parse(newData);
-    console.log(csv);
-
-    res.send(csv);
+    const csv = response.data;
+    res.download(csv);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
