@@ -96,10 +96,8 @@ router.get("/admin/consult/csv/:_id", async (req, res) => {
 router.get("/admin/userid", async (req, res) => {
   console.log("route : /userid");
   try {
-    // On recherche, grâce à la fonction find(), tous les documents de la collection "students" :
     const user = await User.findOne({ email: req.query.email });
 
-    // On retourne ensuite les documents trouvés :
     res.json(user._id);
   } catch (error) {
     res.status(400).json({ error: error.message });
