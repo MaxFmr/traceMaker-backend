@@ -47,7 +47,7 @@ router.post("/user/signup", async (req, res) => {
         res.json({ message: "This email allready has an account" });
       }
     } else {
-      res.json({ message: "Missing parameter(s)" });
+      res.status(400).json({ message: "Missing parameter(s)" });
     }
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -59,6 +59,7 @@ router.post("/user/signup", async (req, res) => {
 router.post("/user/login", async (req, res) => {
   console.log("login road");
   const user = await User.findOne({ email: req.fields.email });
+  console.log(user);
   if (user) {
     try {
       const password = req.fields.password;
@@ -67,7 +68,8 @@ router.post("/user/login", async (req, res) => {
       const saltFromDb = user.salt;
 
       const newHash = SHA256(password + saltFromDb).toString(encBase64);
-
+      console.log(newHash);
+      console.log(hashFromDb);
       if (newHash === hashFromDb) {
         res.json({
           message: "Success",

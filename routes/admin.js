@@ -13,7 +13,7 @@ router.get("/admin/consult/:_id", async (req, res) => {
 
   const apiHeader = user.apiHeader;
 
-  //définition des dates : J et J-1_____________________________________________
+  //définition des dates : J et J-5_____________________________________________
 
   //ajourd'hui
   const date = new Date();
@@ -23,10 +23,10 @@ router.get("/admin/consult/:_id", async (req, res) => {
   const today = new Date();
   const yesterday = new Date(today);
 
-  yesterday.setDate(yesterday.getDate() - 1);
+  yesterday.setDate(yesterday.getDate() - 5);
 
   const yesterdayDate = yesterday.toISOString().split("T")[0];
-  //__________________________________________________________________________________
+  //_____________________________________________________________________________
 
   try {
     const response = await axios.get(
@@ -57,7 +57,7 @@ router.get("/admin/consult/csv/:_id", async (req, res) => {
 
   const apiHeader = user.apiHeader;
 
-  //définition des dates : J et J-1_____________________________________________
+  //définition des dates : J et J-5_____________________________________________
 
   //ajourd'hui
   const date = new Date();
@@ -67,7 +67,7 @@ router.get("/admin/consult/csv/:_id", async (req, res) => {
   const today = new Date();
   const yesterday = new Date(today);
 
-  yesterday.setDate(yesterday.getDate() - 1);
+  yesterday.setDate(yesterday.getDate() - 5);
 
   const yesterdayDate = yesterday.toISOString().split("T")[0];
   //__________________________________________________________________________________
