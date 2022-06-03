@@ -1,14 +1,14 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-const axios = require("axios");
-const base64_encode = require("base-64");
-const { Parser } = require("json2csv");
+const axios = require('axios');
+const base64_encode = require('base-64');
+const { Parser } = require('json2csv');
 
-const User = require("../models/User");
-const Data = require("../models/Data");
+const User = require('../models/User');
+const Data = require('../models/Data');
 
 //consulter les donées en JSON
-router.get("/admin/consult/:_id", async (req, res) => {
+router.get('/admin/consult/:_id', async (req, res) => {
   const user = await User.findById(req.params._id);
 
   const apiHeader = user.apiHeader;
@@ -17,7 +17,7 @@ router.get("/admin/consult/:_id", async (req, res) => {
 
   //ajourd'hui
   const date = new Date();
-  const nowDate = date.toISOString().split("T")[0];
+  const nowDate = date.toISOString().split('T')[0];
 
   //hier
   const today = new Date();
@@ -25,7 +25,7 @@ router.get("/admin/consult/:_id", async (req, res) => {
 
   yesterday.setDate(yesterday.getDate() - 5);
 
-  const yesterdayDate = yesterday.toISOString().split("T")[0];
+  const yesterdayDate = yesterday.toISOString().split('T')[0];
   //_____________________________________________________________________________
 
   try {
@@ -40,19 +40,19 @@ router.get("/admin/consult/:_id", async (req, res) => {
     );
     console.log(response.data);
 
-    const newData = new Data({
-      batch: response.data,
-    });
+    // const newData = new Data({
+    //   batch: response.data,
+    // });
 
-    await newData.save();
-    res.send({ message: "Data created in data-base.", data: response.data });
+    // await newData.save();
+    // res.send({ message: "Data created in data-base.", data: response.data });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
 });
 
 //consulter les donées en CSV
-router.get("/admin/consult/csv/:_id", async (req, res) => {
+router.get('/admin/consult/csv/:_id', async (req, res) => {
   const user = await User.findById(req.params._id);
 
   const apiHeader = user.apiHeader;
@@ -61,7 +61,7 @@ router.get("/admin/consult/csv/:_id", async (req, res) => {
 
   //ajourd'hui
   const date = new Date();
-  const nowDate = date.toISOString().split("T")[0];
+  const nowDate = date.toISOString().split('T')[0];
 
   //hier
   const today = new Date();
@@ -69,7 +69,7 @@ router.get("/admin/consult/csv/:_id", async (req, res) => {
 
   yesterday.setDate(yesterday.getDate() - 5);
 
-  const yesterdayDate = yesterday.toISOString().split("T")[0];
+  const yesterdayDate = yesterday.toISOString().split('T')[0];
   //__________________________________________________________________________________
 
   try {
@@ -85,7 +85,7 @@ router.get("/admin/consult/csv/:_id", async (req, res) => {
     console.log(response.data);
 
     const csv = response.data;
-    res.set("Content-Type", "text/csv");
+    res.set('Content-Type', 'text/csv');
     res.send(csv);
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -93,8 +93,8 @@ router.get("/admin/consult/csv/:_id", async (req, res) => {
 });
 
 // Get id of user
-router.get("/admin/userid", async (req, res) => {
-  console.log("route : /userid");
+router.get('/admin/userid', async (req, res) => {
+  console.log('route : /userid');
   try {
     const user = await User.findOne({ email: req.query.email });
 
