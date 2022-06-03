@@ -57,7 +57,7 @@ router.get('/admin/consult/csv/:_id', async (req, res) => {
 
   const apiHeader = user.apiHeader;
 
-  //définition des dates : J et J-5_____________________________________________
+  //définition des dates : J et J-3_____________________________________________
 
   //ajourd'hui
   const date = new Date();
@@ -67,7 +67,7 @@ router.get('/admin/consult/csv/:_id', async (req, res) => {
   const today = new Date();
   const yesterday = new Date(today);
 
-  yesterday.setDate(yesterday.getDate() - 5);
+  yesterday.setDate(yesterday.getDate() - 3);
 
   const yesterdayDate = yesterday.toISOString().split('T')[0];
   //__________________________________________________________________________________
