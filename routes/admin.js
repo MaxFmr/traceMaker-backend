@@ -45,7 +45,7 @@ router.get('/admin/consult/:_id', async (req, res) => {
     // });
 
     // await newData.save();
-    // res.send({ message: "Data created in data-base.", data: response.data });
+    res.send({ data: response.data });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
