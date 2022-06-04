@@ -67,7 +67,7 @@ router.get('/admin/consult/csv/:_id', async (req, res) => {
   const today = new Date();
   const yesterday = new Date(today);
 
-  yesterday.setDate(yesterday.getDate() - 3);
+  yesterday.setDate(yesterday.getDate() - 2);
 
   const yesterdayDate = yesterday.toISOString().split('T')[0];
   //__________________________________________________________________________________
