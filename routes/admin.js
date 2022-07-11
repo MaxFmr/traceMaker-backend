@@ -42,25 +42,25 @@ router.get('/admin/consult/:_id', async (req, res) => {
     );
     console.log(response.data);
 
-    const buyer = new driver.Ed25519Keypair();
-    const conn = new driver.Connection('https://test.ipdb.io/api/v1/');
+    // const buyer = new driver.Ed25519Keypair();
+    // const conn = new driver.Connection('https://test.ipdb.io/api/v1/');
 
-    response.data.map((batch) => {
-      driver.Transaction.makeCreateTransaction(
-        { batch: batch },
-        null,
-        [
-          driver.Transaction.makeOutput(
-            driver.Transaction.makeEd25519Condition(buyer.publicKey)
-          ),
-        ],
-        buyer.publicKey
-      );
-    });
+    // response.data.map((batch) => {
+    //   driver.Transaction.makeCreateTransaction(
+    //     { batch: batch },
+    //     null,
+    //     [
+    //       driver.Transaction.makeOutput(
+    //         driver.Transaction.makeEd25519Condition(buyer.publicKey)
+    //       ),
+    //     ],
+    //     buyer.publicKey
+    //   );
+    // });
 
-    const txSigned = driver.Transaction.signTransaction(tx, buyer.privateKey);
-    conn.postTransactionCommit(txSigned);
-    console.log(txSigned);
+    // const txSigned = driver.Transaction.signTransaction(tx, buyer.privateKey);
+    // conn.postTransactionCommit(txSigned);
+    // console.log(txSigned);
 
     // const newData = new Data({
     //   batch: response.data,
