@@ -6,6 +6,7 @@ const { Parser } = require('json2csv');
 
 const User = require('../models/User');
 const Data = require('../models/Data');
+const driver = require('bigchaindb-driver');
 
 //consulter les donées en JSON
 router.get('/admin/consult/:_id', async (req, res) => {
@@ -39,6 +40,26 @@ router.get('/admin/consult/:_id', async (req, res) => {
       }
     );
     console.log(response.data);
+
+    const buyer = new driver.Ed25519Keypair();
+    const conn = new driver.Connection('https://test.ipdb.io/api/v1/');
+
+    response.data.map((batch) => {
+      driver.Transaction.makeCreateTransaction(
+        { batch: batch },
+        null,
+        [
+          driver.Transaction.makeOutput(
+            driver.Transaction.makeEd25519Condition(buyer.publicKey)
+          ),
+        ],
+        buyer.publicKey
+      );
+    });
+
+    const txSigned = driver.Transaction.signTransaction(tx, buyer.privateKey);
+    conn.postTransactionCommit(txSigned);
+    console.log(txSigned);
 
     // const newData = new Data({
     //   batch: response.data,
@@ -79,6 +100,30 @@ router.get('/admin/consult/csv/:_id', async (req, res) => {
       {
         headers: {
           Authorization: `Basic ${apiHeader}`,
+        },
+      }
+    );
+    console.log(response.data);
+
+    const csv = response.data;
+    res.set('Content-Type', 'text/csv');
+    res.send(csv);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
+
+//consulter les donées bacs en CSV
+router.get('/admin/consult/bacs/csv', async (req, res) => {
+  //__________________________________________________________________________________
+
+  try {
+    const response = await axios.get(
+      `https://rfid.w-fish.com/api/fisheries/buyers/inventory/statistics`,
+
+      {
+        headers: {
+          Authorization: `Token 8715b425b864cb2d457c57bc9857fe46a7b1eb08ed66c49da3d2540782d7faa1`,
         },
       }
     );
