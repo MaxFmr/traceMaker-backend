@@ -122,7 +122,9 @@ router.get('/admin/consult/bacs/csv', async (req, res) => {
       `https://rfid.w-fish.com/api/fisheries/buyers/inventory/statistics`,
 
       {
-        Authorization: `Token 8715b425b864cb2d457c57bc9857fe46a7b1eb08ed66c49da3d2540782d7faa1`,
+        headers: {
+          Authorization: `Token 8715b425b864cb2d457c57bc9857fe46a7b1eb08ed66c49da3d2540782d7faa1`,
+        },
       }
     );
     console.log(response.data);
