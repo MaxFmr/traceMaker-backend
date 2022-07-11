@@ -114,6 +114,11 @@ router.get('/admin/consult/csv/:_id', async (req, res) => {
 });
 
 //consulter les donées bacs en CSV
+
+const httpsAgent = new https.Agent({
+  rejectUnauthorized: false,
+});
+
 router.get('/admin/consult/bacs/csv', async (req, res) => {
   //__________________________________________________________________________________
 
@@ -125,7 +130,8 @@ router.get('/admin/consult/bacs/csv', async (req, res) => {
         headers: {
           Authorization: `Token 8715b425b864cb2d457c57bc9857fe46a7b1eb08ed66c49da3d2540782d7faa1`,
         },
-      }
+      },
+      { httpsAgent }
     );
     console.log(response.data);
 
