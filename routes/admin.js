@@ -7,6 +7,7 @@ const { Parser } = require('json2csv');
 const User = require('../models/User');
 const Data = require('../models/Data');
 const driver = require('bigchaindb-driver');
+const https = require('https');
 
 //consulter les donées en JSON
 router.get('/admin/consult/:_id', async (req, res) => {
