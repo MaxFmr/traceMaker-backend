@@ -136,7 +136,8 @@ router.get('/admin/consult/bacs/csv', async (req, res) => {
     console.log(response.data);
 
     const csv = response.data;
-    res.send(csv);
+    res.set('Content-Type', 'text/csv');
+    res.send({ data: response.data, csv });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
