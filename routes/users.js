@@ -1,17 +1,17 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-const SHA256 = require("crypto-js/sha256");
-const encBase64 = require("crypto-js/enc-base64");
-const uid2 = require("uid2");
-const cors = require("cors");
+const SHA256 = require('crypto-js/sha256');
+const encBase64 = require('crypto-js/enc-base64');
+const uid2 = require('uid2');
+const cors = require('cors');
 router.use(cors());
 
-const User = require("../models/User");
+const User = require('../models/User');
 
 //Route Sign UP
 
-router.post("/user/signup", async (req, res) => {
-  console.log("SignUp road");
+router.post('/user/signup', async (req, res) => {
+  console.log('SignUp road');
   const userExists = await User.findOne({ email: req.fields.email });
   try {
     if (req.fields.password) {
@@ -44,10 +44,10 @@ router.post("/user/signup", async (req, res) => {
           },
         });
       } else {
-        res.json({ message: "This email allready has an account" });
+        res.json({ message: 'This email allready has an account' });
       }
     } else {
-      res.status(400).json({ message: "Missing parameter(s)" });
+      res.status(400).json({ message: 'Missing parameter(s)' });
     }
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -56,10 +56,9 @@ router.post("/user/signup", async (req, res) => {
 
 //route login
 
-router.post("/user/login", async (req, res) => {
-  console.log("login road");
+router.post('/user/login', async (req, res) => {
+  console.log('login road');
   const user = await User.findOne({ email: req.fields.email });
-  console.log(user);
   if (user) {
     try {
       const password = req.fields.password;
@@ -68,30 +67,28 @@ router.post("/user/login", async (req, res) => {
       const saltFromDb = user.salt;
 
       const newHash = SHA256(password + saltFromDb).toString(encBase64);
-      console.log(newHash);
-      console.log(hashFromDb);
       if (newHash === hashFromDb) {
         res.json({
-          message: "Success",
+          message: 'Success',
           _id: user.id,
           token: user.token,
           apiKey: user.apiHeader,
         });
       } else {
-        res.json({ message: "wrong password" });
+        res.json({ message: 'wrong password' });
       }
     } catch (error) {
       res.status(400).json({ error: error.message });
     }
   } else {
-    res.json({ message: "user does not exists" });
+    res.json({ message: 'user does not exists' });
   }
 });
 
 //Route Search API key
 
-router.get("/apikey", async (req, res) => {
-  console.log("route : /");
+router.get('/apikey', async (req, res) => {
+  console.log('route : /');
   try {
     const userExists = await User.findOne({ email: req.fields.email });
 

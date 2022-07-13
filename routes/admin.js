@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const axios = require('axios');
 const base64_encode = require('base-64');
-const { Parser } = require('json2csv');
+const converter = require('json-2-csv');
 
 const User = require('../models/User');
 const Data = require('../models/Data');
@@ -40,7 +40,6 @@ router.get('/admin/consult/:_id', async (req, res) => {
         },
       }
     );
-    console.log(response.data);
 
     // const buyer = new driver.Ed25519Keypair();
     // const conn = new driver.Connection('https://test.ipdb.io/api/v1/');
@@ -104,7 +103,6 @@ router.get('/admin/consult/csv/:_id', async (req, res) => {
         },
       }
     );
-    console.log(response.data);
 
     const csv = response.data;
     res.set('Content-Type', 'text/csv');
@@ -133,11 +131,10 @@ router.get('/admin/consult/bacs/csv', async (req, res) => {
         },
       }
     );
-    console.log(response.data);
 
-    const csv = response.data;
-    res.set('Content-Type', 'text/csv');
-    res.send({ data: response.data, csv });
+    const json = response.data;
+
+    res.status(200).json(json);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
