@@ -1,16 +1,18 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const axios = require('axios');
-const base64_encode = require('base-64');
-const converter = require('json-2-csv');
+const axios = require("axios");
+const base64_encode = require("base-64");
+const converter = require("json-2-csv");
 
-const User = require('../models/User');
-const Data = require('../models/Data');
-const driver = require('bigchaindb-driver');
-const https = require('https');
+const User = require("../models/User");
+const Data = require("../models/Data");
+const driver = require("bigchaindb-driver");
+const https = require("https");
+const { log } = require("console");
 
 //consulter les donées en JSON
-router.get('/admin/consult/:_id', async (req, res) => {
+router.get("/admin/consult/:_id", async (req, res) => {
+  console.log(req.params._id);
   const user = await User.findById(req.params._id);
 
   const apiHeader = user.apiHeader;
@@ -19,7 +21,7 @@ router.get('/admin/consult/:_id', async (req, res) => {
 
   //ajourd'hui
   const date = new Date();
-  const nowDate = date.toISOString().split('T')[0];
+  const nowDate = date.toISOString().split("T")[0];
 
   //hier
   const today = new Date();
@@ -27,7 +29,7 @@ router.get('/admin/consult/:_id', async (req, res) => {
 
   yesterday.setDate(yesterday.getDate() - 5);
 
-  const yesterdayDate = yesterday.toISOString().split('T')[0];
+  const yesterdayDate = yesterday.toISOString().split("T")[0];
   //_____________________________________________________________________________
 
   try {
@@ -73,7 +75,7 @@ router.get('/admin/consult/:_id', async (req, res) => {
 });
 
 //consulter les donées en CSV
-router.get('/admin/consult/csv/:_id', async (req, res) => {
+router.get("/admin/consult/csv/:_id", async (req, res) => {
   const user = await User.findById(req.params._id);
 
   const apiHeader = user.apiHeader;
@@ -82,7 +84,7 @@ router.get('/admin/consult/csv/:_id', async (req, res) => {
 
   //ajourd'hui
   const date = new Date();
-  const nowDate = date.toISOString().split('T')[0];
+  const nowDate = date.toISOString().split("T")[0];
 
   //hier
   const today = new Date();
@@ -90,7 +92,7 @@ router.get('/admin/consult/csv/:_id', async (req, res) => {
 
   yesterday.setDate(yesterday.getDate() - 2);
 
-  const yesterdayDate = yesterday.toISOString().split('T')[0];
+  const yesterdayDate = yesterday.toISOString().split("T")[0];
   //__________________________________________________________________________________
 
   try {
@@ -105,7 +107,7 @@ router.get('/admin/consult/csv/:_id', async (req, res) => {
     );
 
     const csv = response.data;
-    res.set('Content-Type', 'text/csv');
+    res.set("Content-Type", "text/csv");
     res.send(csv);
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -118,7 +120,7 @@ const httpsAgent = new https.Agent({
   rejectUnauthorized: false,
 });
 
-router.get('/admin/consult/bacs/csv', async (req, res) => {
+router.get("/admin/consult/bacs/csv", async (req, res) => {
   //__________________________________________________________________________________
 
   try {
@@ -141,8 +143,8 @@ router.get('/admin/consult/bacs/csv', async (req, res) => {
 });
 
 // Get id of user
-router.get('/admin/userid', async (req, res) => {
-  console.log('route : /userid');
+router.get("/admin/userid", async (req, res) => {
+  console.log("route : /userid");
   try {
     const user = await User.findOne({ email: req.query.email });
 
