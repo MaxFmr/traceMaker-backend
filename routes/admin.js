@@ -8,11 +8,9 @@ const User = require("../models/User");
 const Data = require("../models/Data");
 const driver = require("bigchaindb-driver");
 const https = require("https");
-const { log } = require("console");
 
 //consulter les donées en JSON
 router.get("/admin/consult/:_id", async (req, res) => {
-  console.log(req.params._id);
   const user = await User.findById(req.params._id);
 
   const apiHeader = user.apiHeader;
